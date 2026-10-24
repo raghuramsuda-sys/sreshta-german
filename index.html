@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sreshta's German — Learn Like a Native</title>
+<style>
+:root{
+  --cream:#FFF8EC; --ink:#21312A; --forest:#1F6B4A; --forest-dark:#174F36;
+  --gold:#E9B44C; --gold-soft:#FBEED3; --red:#D95D4E; --card:#FFFFFF;
+  --muted:#6B7A72; --lock:#C9CFC9; --shadow:0 4px 14px rgba(33,49,42,.10);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Noto Sans",sans-serif;
+  background:var(--cream); color:var(--ink);
+  max-width:480px; margin:0 auto; min-height:100dvh;
+  padding:env(safe-area-inset-top) 16px calc(20px + env(safe-area-inset-bottom));
+}
+button{font-family:inherit; cursor:pointer; border:none;}
+.screen{display:none;}
+.screen.on{display:block;}
+h1{font-size:26px; margin:6px 0 4px;}
+h2{font-size:21px; margin:4px 0 8px;}
+.sub{color:var(--muted); font-size:15px; margin:0 0 14px; line-height:1.45;}
+/* Island back */
+.islandBack{
+  display:inline-flex; align-items:center; gap:6px; min-height:44px;
+  background:#fff; color:var(--forest-dark); border:2px solid var(--gold);
+  padding:8px 14px; border-radius:999px; font-size:14px; font-weight:700;
+  text-decoration:none; box-shadow:var(--shadow); margin:10px 0 4px;
+}
+/* PIN door */
+.doorWrap{text-align:center; padding-top:8px;}
+.doorArch{
+  background:linear-gradient(180deg,#2E7D57,var(--forest-dark));
+  border-radius:120px 120px 22px 22px; padding:26px 18px 20px; color:#fff;
+  box-shadow:var(--shadow); border:4px solid var(--gold);
+}
+.bearFace{
+  width:104px;height:104px;margin:0 auto 8px;border-radius:50%;
+  background:var(--gold-soft); display:flex;align-items:center;justify-content:center;
+  font-size:62px; border:3px solid #fff;
+}
+.doorArch h1{color:#fff;}
+.doorArch .sub{color:#DFF0E5;}
+.pinDots{display:flex; gap:12px; justify-content:center; margin:16px 0 6px; min-height:20px;}
+.pinDots span{width:18px;height:18px;border-radius:50%;background:#E7EFEA;border:2px solid var(--forest);}
+.pinDots span.f{background:var(--forest);}
+.pinMsg{min-height:22px; font-size:15px; font-weight:700; color:var(--forest-dark);}
+.pinPad{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:320px; margin:12px auto 0;}
+.pinPad button{
+  min-height:62px; border-radius:18px; background:#fff; color:var(--ink);
+  font-size:26px; font-weight:800; box-shadow:var(--shadow); border:2px solid #EFE3CB;
+}
+.pinPad button:active{background:var(--gold-soft);}
+.pinPad button.fn{font-size:16px; color:var(--muted);}
+.roleRow{display:flex; gap:10px; justify-content:center; margin-top:16px;}
+.roleRow button{
+  min-height:48px; padding:10px 16px; border-radius:999px; background:#fff;
+  border:2px solid var(--lock); font-size:15px; font-weight:700; color:var(--muted);
+}
+.roleRow button.sel{border-color:var(--forest); color:var(--forest-dark); background:#EAF4EE;}
+/* Header band */
+.hbf{
+  background:linear-gradient(135deg,#2E7D57,var(--forest-dark));
+  color:#fff; border-radius:22px; padding:16px; box-shadow:var(--shadow);
+  border-bottom:6px solid var(--gold); margin-top:10px;
+}
+.hbf .row{display:flex; align-items:center; gap:12px;}
+.hbf .bearFace{width:74px;height:74px;font-size:44px;margin:0;flex:0 0 auto;}
+.hbf h1{color:#fff; font-size:23px; margin:0;}
+.hbf p{margin:3px 0 0; color:#DFF0E5; font-size:14px; line-height:1.4;}
+.starsBar{
+  display:flex; gap:8px; align-items:center; margin-top:12px;
+  background:rgba(255,255,255,.14); border-radius:999px; padding:7px 12px; font-weight:800; font-size:15px;
+}
+/* Buttons + cards */
+.bigBtn{
+  display:flex; align-items:center; justify-content:center; gap:10px; width:100%;
+  min-height:58px; border-radius:18px; background:var(--forest); color:#fff;
+  font-size:19px; font-weight:800; box-shadow:var(--shadow); margin:14px 0;
+}
+.bigBtn:active{background:var(--forest-dark);}
+.bigBtn.gold{background:var(--gold); color:var(--ink);}
+.ghostBtn{
+  display:inline-flex; align-items:center; gap:6px; min-height:48px; padding:10px 16px;
+  border-radius:999px; background:#fff; border:2px solid #EFE3CB; color:var(--ink);
+  font-size:15px; font-weight:700; box-shadow:var(--shadow);
+}
+.card{
+  background:var(--card); border-radius:20px; box-shadow:var(--shadow);
+  padding:16px; margin:12px 0; border:2px solid #F3E9D2;
+}
+.doorCard{
+  display:flex; align-items:center; gap:14px; width:100%; text-align:left;
+  background:var(--card); border-radius:20px; box-shadow:var(--shadow);
+  padding:16px; margin:10px 0; border:2px solid #F3E9D2; min-height:78px;
+}
+.doorCard .ic{font-size:34px; flex:0 0 auto;}
+.doorCard .tt{font-size:18px; font-weight:800;}
+.doorCard .ds{font-size:14px; color:var(--muted); margin-top:2px; line-height:1.35;}
+.doorCard .st{margin-left:auto; font-size:22px; flex:0 0 auto;}
+.doorCard.locked{opacity:.75;}
+.doorCard.locked .tt{color:var(--muted);}
+.doorCard.openNow{border-color:var(--forest);}
+.tag{
+  display:inline-block; font-size:12px; font-weight:800; letter-spacing:.4px;
+  background:var(--gold-soft); color:#8A6414; border-radius:999px; padding:3px 9px; margin-bottom:5px;
+}
+.tag.green{background:#EAF4EE; color:var(--forest-dark);}
+.secTitle{font-size:17px; font-weight:800; margin:20px 0 4px;}
+/* Mission */
+.bubble{
+  background:#fff; border:2px solid var(--gold); border-radius:18px; padding:14px 16px;
+  font-size:16px; line-height:1.5; box-shadow:var(--shadow); margin:10px 0;
+}
+.bubble .who{font-weight:800; color:var(--forest-dark); display:block; margin-bottom:3px; font-size:14px;}
+.storyLine{
+  background:#fff; border-radius:16px; padding:13px 15px; margin:9px 0; box-shadow:var(--shadow);
+  border-left:6px solid var(--gold);
+}
+.storyLine .de{font-size:20px; font-weight:800; line-height:1.35;}
+.storyLine .en{font-size:14px; color:var(--muted); margin-top:2px;}
+.hearBtn{
+  display:inline-flex; align-items:center; gap:7px; min-height:48px; padding:9px 16px;
+  border-radius:999px; background:var(--gold); color:var(--ink); font-size:16px; font-weight:800;
+  box-shadow:var(--shadow); margin:6px 4px 6px 0;
+}
+.hearBtn.small{min-height:44px; font-size:14px; padding:7px 13px;}
+.optGrid{display:grid; grid-template-columns:1fr 1fr; gap:11px; margin:12px 0;}
+.optBtn{
+  min-height:64px; border-radius:16px; background:#fff; border:2px solid #EFE3CB;
+  font-size:18px; font-weight:800; color:var(--ink); box-shadow:var(--shadow); padding:10px;
+}
+.optBtn small{display:block; font-size:13px; color:var(--muted); font-weight:600; margin-top:2px;}
+.optBtn.right{border-color:var(--forest); background:#EAF4EE;}
+.optBtn.wrong{border-color:var(--red); background:#FDECEA;}
+.wordBank{display:flex; flex-wrap:wrap; gap:9px; margin:12px 0;}
+.wordChip{
+  min-height:48px; padding:10px 15px; border-radius:999px; background:#fff;
+  border:2px solid var(--forest); font-size:17px; font-weight:800; color:var(--forest-dark);
+}
+.wordChip.used{opacity:.3;}
+.builtLine{
+  min-height:56px; background:#fff; border:2px dashed var(--gold); border-radius:16px;
+  padding:12px 14px; font-size:19px; font-weight:800; margin:10px 0;
+}
+.progressDots{display:flex; gap:6px; justify-content:center; margin:12px 0 2px;}
+.progressDots i{width:11px;height:11px;border-radius:50%;background:#E3E9E4;}
+.progressDots i.done{background:var(--forest);}
+.progressDots i.now{background:var(--gold); transform:scale(1.3);}
+.center{text-align:center;}
+.bigDe{font-size:27px; font-weight:900; line-height:1.3; text-align:center; margin:12px 0 2px;}
+.bigEn{text-align:center; color:var(--muted); font-size:15px; margin-bottom:8px;}
+.frameRow{display:flex; gap:10px; margin:10px 0;}
+.frame{
+  flex:1; aspect-ratio:1; border:3px dashed var(--lock); border-radius:14px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  color:var(--muted); font-size:12px; font-weight:700; background:#fff; padding:6px; text-align:center;
+}
+.frame .fi{font-size:26px;}
+.wordRow{display:flex; align-items:center; gap:10px; padding:11px 4px; border-bottom:1px solid #F0E7D2;}
+.wordRow:last-child{border-bottom:none;}
+.wordRow .wd{font-size:18px; font-weight:800;}
+.wordRow .wm{font-size:14px; color:var(--muted);}
+.wordRow .hearBtn{margin-left:auto;}
+.pill{font-size:12px; font-weight:800; border-radius:999px; padding:3px 9px; background:var(--gold-soft); color:#8A6414;}
+.pill.owned{background:#EAF4EE; color:var(--forest-dark);}
+.checkItem{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid #F0E7D2; font-size:15px; line-height:1.45;}
+.checkItem:last-child{border-bottom:none;}
+.checkItem .ck{font-size:19px;}
+.footerNote{color:var(--muted); font-size:13px; text-align:center; margin:18px 0 4px; line-height:1.5;}
+</style>
+</head>
+<body>
+
+<!-- ================= PIN DOOR ================= -->
+<section class="screen on" id="scr-pin">
+  <a class="islandBack" href="https://raghuramsuda-sys.github.io/sreshta-languages/">← Languages</a>
+  <div class="doorWrap">
+    <div class="doorArch">
+      <div class="bearFace">🐻</div>
+      <h1>Hallo, Sreshta!</h1>
+      <p class="sub">Welcome to the Hauptbahnhof — your German station.<br>Bruno the Bear is waiting for you.</p>
+    </div>
+    <div class="roleRow">
+      <button id="roleChild" class="sel" onclick="setRole('child')">I am Sreshta</button>
+      <button id="roleParent" onclick="setRole('parent')">Mom &amp; Dad</button>
+    </div>
+    <div class="pinDots" id="pinDots"><span></span><span></span><span></span><span></span></div>
+    <div class="pinMsg" id="pinMsg">Tap your secret code</div>
+    <div class="pinPad" id="pinPad"></div>
+    <p class="footerNote">SAMPLE — Main Door + Phase A1, Level 1 (first 3 missions)</p>
+  </div>
+</section>
+
+<!-- ================= MAIN DOOR ================= -->
+<section class="screen" id="scr-home">
+  <a class="islandBack" href="https://raghuramsuda-sys.github.io/sreshta-languages/">← Languages</a>
+  <div class="hbf">
+    <div class="row">
+      <div class="bearFace">🐻</div>
+      <div>
+        <h1>Hauptbahnhof</h1>
+        <p>Your German Main Door. One phase at a time, all the way to speaking like a native.</p>
+      </div>
+    </div>
+    <div class="starsBar">⭐ <span id="starCount">0</span> stars &nbsp;·&nbsp; 📖 <span id="wordCount">0</span> words met</div>
+  </div>
+
+  <button class="bigBtn" id="continueBtn" onclick="continuePlay()">▶ Continue</button>
+
+  <div class="secTitle">🚪 Phase Doors — Your Fluency Journey</div>
+  <div id="phaseList"></div>
+
+  <div class="secTitle">🎒 My Things</div>
+  <button class="doorCard" onclick="show('words')">
+    <span class="ic">📖</span>
+    <span><span class="tt">My Words</span><div class="ds">Every German word you have met — tap to hear it again.</div></span>
+    <span class="st">›</span>
+  </button>
+  <button class="doorCard" onclick="show('voice')">
+    <span class="ic">🎤</span>
+    <span><span class="tt">My Voice</span><div class="ds">Your first German sounds and your best speaking, saved here.</div></span>
+    <span class="st">›</span>
+  </button>
+  <button class="doorCard" onclick="show('certs')">
+    <span class="ic">🏆</span>
+    <span><span class="tt">Certificates Wall</span><div class="ds">One frame for every phase you finish.</div></span>
+    <span class="st">›</span>
+  </button>
+  <p class="footerNote">Made with love by Nanna, in the USA — for Sreshta in Bangalore.</p>
+</section>
+
+<!-- ================= PHASE A1 ================= -->
+<section class="screen" id="scr-phase">
+  <button class="ghostBtn" onclick="show('home')">← Main Door</button>
+  <h1 style="margin-top:12px;">Phase A1 — Beginner</h1>
+  <p class="sub">Ten stations. At the end you can introduce yourself, talk about family, food, animals and your day — in German.</p>
+  <div id="levelList"></div>
+</section>
+
+<!-- ================= LEVEL 1 ================= -->
+<section class="screen" id="scr-level">
+  <button class="ghostBtn" onclick="show('phase')">← Phase A1</button>
+  <h1 style="margin-top:12px;">Level 1 — Hallo! 👋</h1>
+  <p class="sub">Greetings and the sounds of German. First, Bruno wants to hear what German you already know.</p>
+  <div id="missionList"></div>
+</section>
+
+<!-- ================= PLAY (baseline + missions) ================= -->
+<section class="screen" id="scr-play">
+  <button class="ghostBtn" onclick="exitPlay()">← Level 1</button>
+  <div class="progressDots" id="playDots"></div>
+  <div id="playBody"></div>
+</section>
+
+<!-- ================= MY WORDS ================= -->
+<section class="screen" id="scr-words">
+  <button class="ghostBtn" onclick="show('home')">← Main Door</button>
+  <h1 style="margin-top:12px;">📖 My Words</h1>
+  <p class="sub">Words turn green when you own them — when you finish the mission where you met them.</p>
+  <div class="card" id="wordsList"></div>
+</section>
+
+<!-- ================= MY VOICE ================= -->
+<section class="screen" id="scr-voice">
+  <button class="ghostBtn" onclick="show('home')">← Main Door</button>
+  <h1 style="margin-top:12px;">🎤 My Voice</h1>
+  <div class="card">
+    <p style="margin:4px 0; line-height:1.55;" id="voiceText">Your very first German sounds will live here. Finish the Baseline and your first speaking steps are saved in this portfolio.</p>
+  </div>
+  <div class="card">
+    <div class="tt" style="font-weight:800;">🎯 My first German sentence</div>
+    <div class="bigDe">Hallo! Ich heiße Sreshta.</div>
+    <div class="bigEn">Hello! My name is Sreshta.</div>
+    <div class="center"><button class="hearBtn" onclick="speak('Hallo! Ich heiße Sreshta.')">🔊 Hear Bruno say it</button></div>
+  </div>
+</section>
+
+<!-- ================= CERTIFICATES ================= -->
+<section class="screen" id="scr-certs">
+  <button class="ghostBtn" onclick="show('home')">← Main Door</button>
+  <h1 style="margin-top:12px;">🏆 Certificates Wall</h1>
+  <p class="sub">Finish a phase and its frame fills with your certificate.</p>
+  <div class="frameRow">
+    <div class="frame"><span class="fi">🥇</span>A1<br>Beginner</div>
+    <div class="frame"><span class="fi">🥈</span>A2<br>Everyday Talk</div>
+    <div class="frame"><span class="fi">🥉</span>B1<br>Fluent Talk</div>
+  </div>
+  <div class="frameRow">
+    <div class="frame"><span class="fi">🏅</span>B2<br>Super Fluent</div>
+    <div class="frame"><span class="fi">🎖️</span>C1<br>Advanced</div>
+    <div class="frame"><span class="fi">👑</span>C2<br>Like a Native</div>
+  </div>
+</section>
+
+<!-- ================= PARENTS ================= -->
+<section class="screen" id="scr-parents">
+  <a class="islandBack" href="https://raghuramsuda-sys.github.io/sreshta-languages/">← Languages</a>
+  <h1 style="margin-top:10px;">Parents Dashboard — German</h1>
+  <p class="sub">Step 1 of 3: overview. Tap a phase in the full build for level detail.</p>
+  <div class="card" id="parentOverview"></div>
+  <div class="card">
+    <div style="font-weight:800; margin-bottom:4px;">🏠 German at Home (this week)</div>
+    <div class="checkItem"><span class="ck">🎵</span><span>Play the A1 songs/stories audio in the background once a day — listening first, no pressure to repeat.</span></div>
+    <div class="checkItem"><span class="ck">🏷️</span><span>Stick 3 word labels from My Words on things at home (Tür, Tisch, Fenster).</span></div>
+    <div class="checkItem"><span class="ck">📞</span><span>Nanna German Call: 2 minutes. This week's lines: „Hallo! Wie geht's?“ — „Mir geht's gut!“</span></div>
+  </div>
+  <button class="bigBtn gold" onclick="show('home')">Preview Sreshta's Main Door</button>
+  <button class="ghostBtn" onclick="show('pin')">← Back to PIN door</button>
+</section>
+
+<script>
+/* ============ DATA ============ */
+const PHASES=[
+ {id:"A1",icon:"🚂",name:"Phase A1 — Beginner",desc:"Introduce yourself, family, food, animals, your day.",state:"open"},
+ {id:"A2",icon:"🚃",name:"Phase A2 — Everyday Talk",desc:"Routines, shopping, plans and the past.",state:"locked",need:"Finish A1 to open"},
+ {id:"B1",icon:"🚄",name:"Phase B1 — Fluent Talk",desc:"Stories, opinions and real conversations.",state:"locked",need:"Finish A2 to open"},
+ {id:"B2",icon:"✈️",name:"Phase B2 — Super Fluent",desc:"Argue a point, follow German shows and books.",state:"locked",need:"Finish B1 to open"},
+ {id:"C",icon:"👑",name:"C1 / C2 — Like a Native",desc:"Someday doors. They open in your teens, when you are ready.",state:"someday",need:"Someday"}
+];
+const LEVELS=[
+ {n:1,t:"Hallo!",d:"Greetings & German sounds",state:"open"},
+ {n:2,t:"Zahlen & Farben",d:"Numbers & colours",state:"sample"},
+ {n:3,t:"Meine Familie",d:"Family & home",state:"sample"},
+ {n:4,t:"In der Schule",d:"School",state:"sample"},
+ {n:5,t:"Essen",d:"Food",state:"sample"},
+ {n:6,t:"Tiere",d:"Animals",state:"sample"},
+ {n:7,t:"Mein Tag",d:"My day & time",state:"sample"},
+ {n:8,t:"Wetter & Kleidung",d:"Weather & clothes",state:"sample"},
+ {n:9,t:"Hobbys & Stadt",d:"Hobbies & town",state:"sample"},
+ {n:10,t:"Ich kann Deutsch!",d:"Final conversations + postcard",state:"sample"}
+];
+const BASELINE={
+ title:"Baseline — What German do you know?",
+ steps:[
+  {kind:"listen",say:"Hallo",q:"Tap 🔊, listen, then tap what it means.",
+   options:[{t:"Hello",ok:true},{t:"Goodbye",ok:false},{t:"Thank you",ok:false},{t:"Please",ok:false}]},
+  {kind:"listen",say:"Danke",q:"Tap 🔊, listen, then tap what it means.",
+   options:[{t:"Thank you",ok:true},{t:"Hello",ok:false},{t:"Yes",ok:false},{t:"Cat",ok:false}]},
+  {kind:"speak",de:"Hallo! Ich heiße Sreshta.",en:"Hello! My name is Sreshta.",
+   q:"Now your turn. Say it out loud, just like Bruno — no marks, this is only for your My Voice portfolio."}
+ ]};
+const MISSIONS=[
+ {id:"m1",n:1,title:"Hallo, Bruno!",de:"Greetings",
+  story:[
+   {de:"Hallo! Ich bin Bruno.",en:"Hello! I am Bruno."},
+   {de:"Ich bin ein Bär aus Berlin.",en:"I am a bear from Berlin."},
+   {de:"Wie heißt du?",en:"What is your name?"},
+   {de:"Ich heiße Sreshta!",en:"My name is Sreshta!"},
+   {de:"Guten Morgen, Sreshta!",en:"Good morning, Sreshta!"},
+   {de:"Guten Morgen, Bruno!",en:"Good morning, Bruno!"}
+  ],
+  listen:{say:"Guten Morgen",q:"Listen — which one did Bruno say?",
+   options:[{t:"Guten Morgen",s:"Good morning",ok:true},{t:"Gute Nacht",s:"Good night",ok:false},{t:"Tschüss",s:"Bye",ok:false},{t:"Danke",s:"Thank you",ok:false}]},
+  speak:{de:"Hallo! Ich heiße Sreshta. Guten Morgen!",en:"Hello! My name is Sreshta. Good morning!"},
+  play:{sentence:["Ich","heiße","Sreshta"],hint:"Build Bruno's question-answer: tap the words in order — “I am called Sreshta.”"},
+  words:[["Hallo","Hello"],["Guten Morgen","Good morning"],["Ich heiße…","My name is…"],["der Bär","the bear"],["Berlin","Berlin (city)"]]
+ },
+ {id:"m2",n:2,title:"Wie geht's?",de:"How are you?",
+  story:[
+   {de:"Hallo, Sreshta! Wie geht's?",en:"Hello, Sreshta! How are you?"},
+   {de:"Mir geht's gut, danke!",en:"I am well, thank you!"},
+   {de:"Und dir?",en:"And you?"},
+   {de:"Mir geht's auch gut!",en:"I am well too!"},
+   {de:"Tschüss, Bruno!",en:"Bye, Bruno!"},
+   {de:"Tschüss! Bis morgen!",en:"Bye! See you tomorrow!"}
+  ],
+  listen:{say:"Danke",q:"Listen — which one did Bruno say?",
+   options:[{t:"Danke",s:"Thank you",ok:true},{t:"Bitte",s:"Please / You're welcome",ok:false},{t:"Ja",s:"Yes",ok:false},{t:"Nein",s:"No",ok:false}]},
+  speak:{de:"Mir geht's gut, danke! Und dir?",en:"I am well, thank you! And you?"},
+  play:{sentence:["Mir","geht's","gut"],hint:"Build it in order — “I am well.”"},
+  words:[["Wie geht's?","How are you?"],["Mir geht's gut","I am well"],["Danke","Thank you"],["Tschüss","Bye"],["Bis morgen","See you tomorrow"]]
+ },
+ {id:"m3",n:3,title:"So klingt Deutsch",de:"German sounds",
+  story:[
+   {de:"Das A sagt: ah!",en:"The letter A says: ah!"},
+   {de:"Das J sagt: j — wie in ja!",en:"The letter J says: y — as in ja (yes)!"},
+   {de:"Das W sagt: w — wie in Wasser!",en:"The letter W says: v — as in Wasser (water)!"},
+   {de:"Ei sagt: ai — wie in eins!",en:"Ei says: ai — as in eins (one)!"},
+   {de:"Ie sagt: ie — wie in Liebe!",en:"Ie says: ee — as in Liebe (love)!"}
+  ],
+  listen:{say:"Wasser",q:"Listen — which word did Bruno say? (W sounds like V in German!)",
+   options:[{t:"Wasser",s:"water",ok:true},{t:"Liebe",s:"love",ok:false},{t:"eins",s:"one",ok:false},{t:"ja",s:"yes",ok:false}]},
+  speak:{de:"Ja! Ich liebe Wasser.",en:"Yes! I love water."},
+  play:{sentence:["Ich","liebe","Wasser"],hint:"Build it in order — “I love water.”"},
+  words:[["ja","yes"],["das Wasser","water"],["die Liebe","love"],["eins","one"],["der Buchstabe","the letter"]]
+ }
+];
+
+/* ============ STATE ============ */
+const KEY="sreshtaGermanSampleV1";
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY))||null;}catch(e){S=null;}
+if(!S||typeof S!=="object")S={baseline:false,done:{},words:{},voice:false};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function totalStars(){let t=0;for(const k in S.done)t+=S.done[k];return t;}
+function wordsMet(){return Object.keys(S.words).length;}
+
+/* ============ AUDIO (device German voice; full build embeds native clips) ============ */
+function speak(text){
+  try{
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang="de-DE"; u.rate=0.85;
+    const vs=speechSynthesis.getVoices();
+    const v=vs.find(x=>x.lang&&x.lang.toLowerCase().indexOf("de")===0);
+    if(v)u.voice=v;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+if("speechSynthesis" in window){try{speechSynthesis.getVoices();}catch(e){}}
+
+/* ============ NAV ============ */
+function show(name){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
+  document.getElementById("scr-"+name).classList.add("on");
+  window.scrollTo(0,0);
+  if(name==="home")renderHome();
+  if(name==="phase")renderPhase();
+  if(name==="level")renderLevel();
+  if(name==="words")renderWords();
+  if(name==="parents")renderParents();
+  if(name==="voice"&&S.voice){
+    document.getElementById("voiceText").textContent="⭐ Saved: your Baseline first sounds (23 Oct 2026) and every Speak step you finish. Parents can compare First vs Latest here in the full build.";
+  }
+}
+
+/* ============ PIN ============ */
+let role="child", pinBuf="";
+const pad=document.getElementById("pinPad");
+["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(k=>{
+  const b=document.createElement("button");
+  b.textContent=k; if(k==="⌫"||k==="")b.className="fn";
+  b.onclick=()=>pinKey(k); pad.appendChild(b);
+});
+function setRole(r){
+  role=r; pinBuf=""; drawPin("");
+  document.getElementById("roleChild").classList.toggle("sel",r==="child");
+  document.getElementById("roleParent").classList.toggle("sel",r==="parent");
+}
+function drawPin(msg){
+  const d=document.querySelectorAll("#pinDots span");
+  d.forEach((s,i)=>s.classList.toggle("f",i<pinBuf.length));
+  if(msg!==undefined&&msg!=="")document.getElementById("pinMsg").textContent=msg;
+}
+function pinKey(k){
+  if(k==="⌫"){pinBuf=pinBuf.slice(0,-1); drawPin("Tap your secret code"); return;}
+  if(k===""||pinBuf.length>=4)return;
+  pinBuf+=k; drawPin("");
+  if(pinBuf.length===4){
+    const want=role==="child"?"2017":"2208";
+    if(pinBuf===want){
+      drawPin(role==="child"?"Willkommen, Sreshta! 🌟":"Welcome! 🌟");
+      const target=role==="child"?"home":"parents";
+      setTimeout(()=>{pinBuf=""; drawPin("Tap your secret code"); show(target);},450);
+    }else{
+      drawPin("Hmm, that code is not right. Try again.");
+      setTimeout(()=>{pinBuf=""; drawPin("Tap your secret code");},700);
+    }
+  }
+}
+
+/* ============ HOME / PHASE / LEVEL ============ */
+function renderHome(){
+  document.getElementById("starCount").textContent=totalStars();
+  document.getElementById("wordCount").textContent=wordsMet();
+  const cb=document.getElementById("continueBtn");
+  if(!S.baseline)cb.textContent="▶ Start — Baseline with Bruno";
+  else{
+    const next=MISSIONS.find(m=>!S.done[m.id]);
+    cb.textContent=next?("▶ Continue — Mission "+next.n+" · "+next.title):"▶ Replay Level 1 missions";
+  }
+  const list=document.getElementById("phaseList"); list.innerHTML="";
+  PHASES.forEach(p=>{
+    const b=document.createElement("button");
+    b.className="doorCard"+(p.state==="open"?" openNow":" locked");
+    b.innerHTML='<span class="ic">'+p.icon+'</span><span><span class="tt">'+p.name+'</span><div class="ds">'+p.desc+'</div></span><span class="st">'+(p.state==="open"?"›":"🔒")+'</span>';
+    if(p.state==="open")b.onclick=()=>show("phase");
+    else b.onclick=()=>alert(p.need+" — one phase at a time, like a native grows. 🌱");
+    list.appendChild(b);
+  });
+}
+function continuePlay(){
+  show("level");
+  if(!S.baseline)startBaseline();
+  else{
+    const next=MISSIONS.find(m=>!S.done[m.id]);
+    if(next)startMission(next.id); else startMission("m1");
+  }
+}
+function renderPhase(){
+  const list=document.getElementById("levelList"); list.innerHTML="";
+  LEVELS.forEach(l=>{
+    const b=document.createElement("button");
+    const open=l.state==="open";
+    b.className="doorCard"+(open?" openNow":" locked");
+    b.innerHTML='<span class="ic">'+(open?"🚪":"🔒")+'</span><span><span class="tag '+(open?"green":"")+'">LEVEL '+l.n+'</span><br><span class="tt">'+l.t+'</span><div class="ds">'+l.d+(open?"":" · Comes in the full A1 build")+'</div></span><span class="st">'+(open?"›":"")+'</span>';
+    if(open)b.onclick=()=>show("level");
+    list.appendChild(b);
+  });
+}
+function renderLevel(){
+  const list=document.getElementById("missionList"); list.innerHTML="";
+  const bb=document.createElement("button");
+  bb.className="doorCard"+(S.baseline?"":" openNow");
+  bb.innerHTML='<span class="ic">🌱</span><span><span class="tag green">FIRST</span><br><span class="tt">Baseline — What German do you know?</span><div class="ds">No marks. Just play and try.</div></span><span class="st">'+(S.baseline?"✅":"›")+'</span>';
+  bb.onclick=startBaseline; list.appendChild(bb);
+  MISSIONS.forEach(m=>{
+    const done=!!S.done[m.id];
+    const locked=!S.baseline;
+    const b=document.createElement("button");
+    b.className="doorCard"+(locked?" locked":" openNow");
+    b.innerHTML='<span class="ic">'+(done?"✅":("🎧"))+'</span><span><span class="tag">MISSION '+m.n+'</span><br><span class="tt">'+m.title+'</span><div class="ds">'+m.de+(done?" · ⭐⭐⭐ earned":"")+(locked?" · Finish the Baseline first":"")+'</div></span><span class="st">'+(locked?"🔒":"›")+'</span>';
+    if(!locked)b.onclick=()=>startMission(m.id);
+    list.appendChild(b);
+  });
+  [4,5].forEach(n=>{
+    const b=document.createElement("button");
+    b.className="doorCard locked";
+    b.innerHTML='<span class="ic">🔒</span><span><span class="tag">MISSION '+n+'</span><br><span class="tt">Coming in the full build</span><div class="ds">This is the sample — Missions 1–3 are playable.</div></span>';
+    list.appendChild(b);
+  });
+}
+
+/* ============ PLAY ENGINE ============ */
+let play=null; // {type:'baseline'|'mission', m, step, built:[], answered:false}
+function dots(n,now){
+  const d=document.getElementById("playDots"); d.innerHTML="";
+  for(let i=0;i<n;i++){const el=document.createElement("i"); if(i<now)el.className="done"; if(i===now)el.className="now"; d.appendChild(el);}
+}
+function bubble(html){return '<div class="bubble"><span class="who">🐻 Bruno says</span>'+html+'</div>';}
+function startBaseline(){
+  play={type:"baseline",step:0,answered:false};
+  show("play"); renderPlay();
+}
+function startMission(id){
+  const m=MISSIONS.find(x=>x.id===id);
+  play={type:"mission",m:m,step:0,built:[],answered:false};
+  show("play"); renderPlay();
+}
+function exitPlay(){play=null; show("level");}
+function stepsOf(){
+  if(play.type==="baseline")return BASELINE.steps.length+1; // + finish
+  return 6; // story, listen, speak, play, read, finish handled as step 5 view
+}
+function renderPlay(){
+  const body=document.getElementById("playBody");
+  dots(stepsOf(),Math.min(play.step,stepsOf()-1));
+  if(play.type==="baseline")return renderBaseline(body);
+  const m=play.m;
+  if(play.step===0){ // STORY
+    body.innerHTML=bubble("Listen to my story first. Just listen and watch — you will understand more than you think!")+
+      m.story.map(l=>'<div class="storyLine"><div class="de">'+l.de+'</div><div class="en">'+l.en+'</div></div>').join("")+
+      '<button class="hearBtn" onclick="speakStory()">🔊 Hear the whole story</button>'+
+      '<button class="bigBtn" onclick="nextStep()">I listened ✓ Next</button>';
+  }
+  else if(play.step===1){ // LISTEN
+    const L=m.listen;
+    body.innerHTML=bubble(L.q)+
+      '<div class="center"><button class="hearBtn" onclick="speak(\''+L.say.replace(/'/g,"\\'")+'\')">🔊 Hear it</button></div>'+
+      '<div class="optGrid">'+shuffle(L.options.map((o,i)=>({o:o,i:i}))).map(x=>'<button class="optBtn" id="opt'+x.i+'" onclick="answerListen('+x.i+')">'+x.o.t+'<small>'+x.o.s+'</small></button>').join("")+'</div>'+
+      '<div id="listenMsg"></div>';
+  }
+  else if(play.step===2){ // SPEAK
+    body.innerHTML=bubble("Now speak like a native — copy my sound exactly. Amma can listen and cheer!")+
+      '<div class="bigDe">'+m.speak.de+'</div><div class="bigEn">'+m.speak.en+'</div>'+
+      '<div class="center"><button class="hearBtn" onclick="speak(\''+m.speak.de.replace(/'/g,"\\'")+'\')">🔊 Hear Bruno</button></div>'+
+      '<button class="bigBtn gold" onclick="nextStep()">🎤 I said it out loud!</button>';
+  }
+  else if(play.step===3){ // PLAY build sentence
+    const P=m.play;
+    body.innerHTML=bubble(P.hint)+
+      '<div class="builtLine" id="builtLine">Tap the words below…</div>'+
+      '<div class="wordBank">'+shuffle(P.sentence.map((w,i)=>({w:w,i:i}))).map(x=>'<button class="wordChip" id="chip'+x.i+'" onclick="tapWord('+x.i+',\''+x.w.replace(/'/g,"\\'")+'\')">'+x.w+'</button>').join("")+'</div>'+
+      '<div id="playMsg"></div><button class="ghostBtn" onclick="resetBuild()">↺ Start again</button>';
+  }
+  else if(play.step===4){ // READ
+    body.innerHTML=bubble("Now read my story yourself — out loud, slowly. The words are your friends now.")+
+      m.story.map(l=>'<div class="storyLine"><div class="de">'+l.de+'</div></div>').join("")+
+      '<button class="hearBtn" onclick="speakStory()">🔊 Check with Bruno</button>'+
+      '<button class="bigBtn" onclick="nextStep()">I read it ✓ Finish</button>';
+  }
+  else{ // FINISH
+    const first=!S.done[m.id];
+    if(first){
+      S.done[m.id]=3;
+      m.words.forEach(w=>{S.words[w[0]]="owned";});
+      save();
+    }
+    body.innerHTML='<div class="center" style="font-size:64px;">🎉</div>'+
+      bubble("Wunderbar, Sreshta! You finished <b>"+m.title+"</b>."+(first?" ⭐⭐⭐ Three stars — counted once, saved forever.":" You replayed it — stars stay as they are, practice makes you native!"))+
+      '<button class="bigBtn" onclick="exitPlay()">Back to Level 1</button>'+
+      '<button class="ghostBtn" onclick="show(\'home\')">Main Door</button>';
+  }
+}
+function speakStory(){
+  if(!play||play.type!=="mission")return;
+  speak(play.m.story.map(l=>l.de).join(" "));
+}
+function nextStep(){play.step++; play.answered=false; play.built=[]; renderPlay();}
+function shuffle(a){a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); const t=a[i];a[i]=a[j];a[j]=t;} return a;}
+function answerListen(i){
+  if(play.answered)return;
+  const L=play.m.listen, o=L.options[i];
+  const btn=document.getElementById("opt"+i);
+  if(o.ok){
+    play.answered=true; btn.classList.add("right");
+    document.getElementById("listenMsg").innerHTML=bubble("Genau! Exactly right. 🎉")+'<button class="bigBtn" onclick="nextStep()">Next → Speak</button>';
+  }else{
+    btn.classList.add("wrong");
+    document.getElementById("listenMsg").innerHTML=bubble("Not that one — listen once more, you can do it. 💪");
+    speak(L.say);
+  }
+}
+function tapWord(i,w){
+  const P=play.m.play;
+  const expect=P.sentence[play.built.length];
+  const chip=document.getElementById("chip"+i);
+  if(w!==expect){
+    document.getElementById("playMsg").innerHTML=bubble("Hmm — the next word is not that one. Listen to the sentence in your head and try again.");
+    return;
+  }
+  play.built.push(w); chip.classList.add("used"); chip.disabled=true;
+  document.getElementById("builtLine").textContent=play.built.join(" ");
+  document.getElementById("playMsg").innerHTML="";
+  if(play.built.length===P.sentence.length){
+    speak(P.sentence.join(" "));
+    document.getElementById("playMsg").innerHTML=bubble("Perfekt! That is a real German sentence — and YOU built it. 🎉")+'<button class="bigBtn" onclick="nextStep()">Next → Read</button>';
+  }
+}
+function resetBuild(){play.built=[]; renderPlay();}
+
+/* ============ BASELINE ============ */
+function renderBaseline(body){
+  const st=BASELINE.steps[play.step];
+  if(!st){
+    if(!S.baseline){S.baseline=true; S.voice=true; save();}
+    body.innerHTML='<div class="center" style="font-size:64px;">🌱</div>'+
+      bubble("Fertig! Your first German sounds are saved in My Voice. Now Mission 1 is open — let us really begin!")+
+      '<button class="bigBtn" onclick="exitPlay()">Go to Level 1</button>';
+    return;
+  }
+  if(st.kind==="listen"){
+    body.innerHTML=bubble(st.q)+
+      '<div class="center"><button class="hearBtn" onclick="speak(\''+st.say+'\')">🔊 Hear it</button></div>'+
+      '<div class="optGrid">'+shuffle(st.options.map((o,i)=>({o:o,i:i}))).map(x=>'<button class="optBtn" id="bopt'+x.i+'" onclick="answerBaseline('+x.i+')">'+x.o.t+'</button>').join("")+'</div><div id="bMsg"></div>';
+  }else{
+    body.innerHTML=bubble(st.q)+
+      '<div class="bigDe">'+st.de+'</div><div class="bigEn">'+st.en+'</div>'+
+      '<div class="center"><button class="hearBtn" onclick="speak(\''+st.de.replace(/'/g,"\\'")+'\')">🔊 Hear Bruno</button></div>'+
+      '<button class="bigBtn gold" onclick="play.step++; renderPlay();">🎤 I tried it!</button>';
+  }
+}
+function answerBaseline(i){
+  const st=BASELINE.steps[play.step], o=st.options[i];
+  const btn=document.getElementById("bopt"+i);
+  if(o.ok){btn.classList.add("right"); document.getElementById("bMsg").innerHTML=bubble("You heard it! That is how German ears grow. 🌱")+'<button class="bigBtn" onclick="play.step++; renderPlay();">Next</button>';}
+  else{btn.classList.add("wrong"); document.getElementById("bMsg").innerHTML=bubble("Good try — listen again."); speak(st.say);}
+}
+
+/* ============ WORDS / PARENTS ============ */
+function renderWords(){
+  const el=document.getElementById("wordsList");
+  const all={};
+  MISSIONS.forEach(m=>m.words.forEach(w=>{all[w[0]]=w[1];}));
+  const met=Object.keys(all).filter(w=>S.words[w]);
+  if(!met.length){el.innerHTML="<p style='margin:4px 0;'>No words yet — finish Mission 1 and your first German words will appear here.</p>"; return;}
+  el.innerHTML=met.map(w=>'<div class="wordRow"><span><span class="wd">'+w+'</span><br><span class="wm">'+all[w]+'</span></span><span class="pill owned">OWNED</span><button class="hearBtn small" onclick="speak(\''+w.replace(/'/g,"\\'")+'\')">🔊</button></div>').join("");
+}
+function renderParents(){
+  const doneN=Object.keys(S.done).length;
+  document.getElementById("parentOverview").innerHTML=
+    '<div style="font-weight:800; margin-bottom:6px;">📊 Overview — Phase A1, Level 1 (sample)</div>'+
+    '<p style="margin:4px 0;">Baseline: <b>'+(S.baseline?"Done ✅":"Not yet")+'</b></p>'+
+    '<p style="margin:4px 0;">Missions finished: <b>'+doneN+' of 3</b> (sample) · Stars: <b>'+totalStars()+'</b></p>'+
+    '<p style="margin:4px 0;">Words met &amp; owned: <b>'+wordsMet()+'</b></p>'+
+    '<p style="margin:4px 0;">Next step: <b>'+(doneN>=3?"Sample complete — full A1 build comes next (Levels 1–10, 50 missions).":"Continue Level 1 with Amma, ~15 minutes, speaking out loud.")+'</b></p>';
+}
+renderHome();
+</script>
+</body>
+</html>
